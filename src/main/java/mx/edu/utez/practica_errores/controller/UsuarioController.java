@@ -16,22 +16,22 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping("/")
+    @GetMapping(value = "/", produces = "application/json")
     public ResponseEntity<ApiResponse> getAllUsers() {
         return usuarioService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<ApiResponse> getUserById(@PathVariable Long id) {
         return usuarioService.findById(id);
     }
 
-    @PostMapping("/registrar")
+    @PostMapping(value = "/registrar", produces = "application/json")
     public ResponseEntity<ApiResponse> registerUser(@RequestBody BeanUsuario usuario) {
         return usuarioService.save(usuario);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<ApiResponse> deleteUser(@PathVariable Long id) {
         return usuarioService.deleteById(id);
     }

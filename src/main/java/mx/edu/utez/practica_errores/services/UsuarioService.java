@@ -1,5 +1,6 @@
 package mx.edu.utez.practica_errores.services;
 
+import mx.edu.utez.practica_errores.exception.CustomNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import mx.edu.utez.practica_errores.config.ApiResponse;
 import mx.edu.utez.practica_errores.models.BeanUsuario;
@@ -19,6 +20,7 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
+    /*
     @Transactional(readOnly = true)
     public ResponseEntity<ApiResponse> findAll() {
         return ResponseEntity.ok(new ApiResponse(
@@ -26,13 +28,23 @@ public class UsuarioService {
                 HttpStatus.OK
         ));
     }
+     */
+    @Transactional(readOnly = true)
+    public ResponseEntity<ApiResponse> findAll() {
+        var usuarios = usuarioRepository.findAll();
+        System.out.println("Usuarios encontrados: " + usuarios.size()); // Verifica si devuelve algo
+        if (usuarios.isEmpty()) {
+            System.out.println("No hay usuarios en la base de datos.");
+        }
+        return ResponseEntity.ok(new ApiResponse(usuarios, HttpStatus.OK));
+    }
+
 
     @Transactional(readOnly = true)
     public ResponseEntity<ApiResponse> findById(Long id) {
         return usuarioRepository.findById(id)
                 .map(usuario -> ResponseEntity.ok(new ApiResponse(usuario, HttpStatus.OK)))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(new ApiResponse(HttpStatus.NOT_FOUND, true, "Usuario no encontrado")));
+                .orElseThrow(() -> new CustomNotFoundException("Usuario no encontrado"));
     }
 
     @Transactional
