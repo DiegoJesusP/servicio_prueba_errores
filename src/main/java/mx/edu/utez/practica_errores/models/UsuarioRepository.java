@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<BeanUsuario, Long> {
-    Optional<BeanUsuario> findById(Long id);  // findById ya existe en JpaRepository, pero puedes declararlo
     List<BeanUsuario> findByNombre(String nombre);
     Optional<BeanUsuario> findByEmail(String email);
 }
+
