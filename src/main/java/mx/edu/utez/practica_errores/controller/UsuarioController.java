@@ -35,4 +35,9 @@ public class UsuarioController {
     public ResponseEntity<ApiResponse> deleteUser(@PathVariable Long id) {
         return usuarioService.deleteById(id);
     }
+
+    @GetMapping(value = "u/{uuid}", produces = "application/json")
+    public ResponseEntity<ApiResponse> getUserByUUID(@PathVariable String uuid) {
+        return usuarioService.findByUUID(uuid);
+    }
 }

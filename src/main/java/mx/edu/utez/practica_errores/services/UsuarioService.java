@@ -47,6 +47,13 @@ public class UsuarioService {
                 .orElseThrow(() -> new CustomNotFoundException("Usuario no encontrado"));
     }
 
+    @Transactional(readOnly = true)
+    public ResponseEntity<ApiResponse> findByUUID(String uuid) {
+        return usuarioRepository.findByUUID(uuid)
+                .map(usuario -> ResponseEntity.ok(new ApiResponse(usuario, HttpStatus.OK)))
+                .orElseThrow(() -> new CustomNotFoundException("Usuario no encontrado"));
+    }
+
     @Transactional
     public ResponseEntity<ApiResponse> save(BeanUsuario usuario) {
         if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
