@@ -20,25 +20,11 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    /*
-    @Transactional(readOnly = true)
-    public ResponseEntity<ApiResponse> findAll() {
-        return ResponseEntity.ok(new ApiResponse(
-                usuarioRepository.findAll(),
-                HttpStatus.OK
-        ));
-    }
-     */
     @Transactional(readOnly = true)
     public ResponseEntity<ApiResponse> findAll() {
         var usuarios = usuarioRepository.findAll();
-        System.out.println("Usuarios encontrados: " + usuarios.size()); // Verifica si devuelve algo
-        if (usuarios.isEmpty()) {
-            System.out.println("No hay usuarios en la base de datos.");
-        }
         return ResponseEntity.ok(new ApiResponse(usuarios, HttpStatus.OK));
     }
-
 
     @Transactional(readOnly = true)
     public ResponseEntity<ApiResponse> findById(Long id) {
@@ -48,17 +34,17 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public ResponseEntity<ApiResponse> findByUUID(String uuid) {
-        return usuarioRepository.findByUUID(uuid)
+    public ResponseEntity<ApiResponse> findByUuid(String uuid) {
+        return usuarioRepository.findByUuid(uuid)
                 .map(usuario -> ResponseEntity.ok(new ApiResponse(usuario, HttpStatus.OK)))
                 .orElseThrow(() -> new CustomNotFoundException("Usuario no encontrado"));
     }
 
     @Transactional
     public ResponseEntity<ApiResponse> save(BeanUsuario usuario) {
-        if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
+        if (usuarioRepository.findByCorreo(usuario.getCorreo()).isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El correo ya está registrado"));
+                    .body(new ApiResponse(HttpStatus.BAD_REQUEST, true, "El correo ya esta registrado"));
         }
         usuarioRepository.save(usuario);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -75,4 +61,3 @@ public class UsuarioService {
         return ResponseEntity.ok(new ApiResponse(HttpStatus.OK, false, "Usuario eliminado correctamente"));
     }
 }
-

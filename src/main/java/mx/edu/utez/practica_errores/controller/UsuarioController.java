@@ -3,6 +3,7 @@ package mx.edu.utez.practica_errores.controller;
 import mx.edu.utez.practica_errores.models.BeanUsuario;
 import mx.edu.utez.practica_errores.services.UsuarioService;
 import mx.edu.utez.practica_errores.config.ApiResponse;
+import mx.edu.utez.practica_errores.controller.dto.UsuarioDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,14 @@ public class UsuarioController {
     }
 
     @PostMapping(value = "/registrar", produces = "application/json")
-    public ResponseEntity<ApiResponse> registerUser(@RequestBody BeanUsuario usuario) {
+    public ResponseEntity<ApiResponse> registerUser(@RequestBody UsuarioDto usuarioDto) {
+        BeanUsuario usuario = new BeanUsuario(
+                usuarioDto.getRazonSocial(),
+                usuarioDto.getRfc(),
+                usuarioDto.getTelefono(),
+                usuarioDto.getContacto(),
+                usuarioDto.getCorreo()
+        );
         return usuarioService.save(usuario);
     }
 
@@ -38,6 +46,6 @@ public class UsuarioController {
 
     @GetMapping(value = "u/{uuid}", produces = "application/json")
     public ResponseEntity<ApiResponse> getUserByUUID(@PathVariable String uuid) {
-        return usuarioService.findByUUID(uuid);
+        return usuarioService.findByUuid(uuid);
     }
 }

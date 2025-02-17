@@ -12,33 +12,54 @@ public class BeanUsuario {
     private Long id;
 
     @Column(nullable = false, unique = true, updatable = false)
-    private UUID uuid;
+    private String uuid;
+
+    @Column(nullable = false, length = 150)
+    private String razonSocial;
+
+    @Column(nullable = false, unique = true, length = 13)
+    private String rfc;
+
+    @Column(nullable = false, length = 20)
+    private String telefono;
 
     @Column(nullable = false, length = 100)
-    private String nombre;
+    private String contacto;
 
     @Column(nullable = false, unique = true, length = 100)
-    private String email;
+    private String correo;
 
     public BeanUsuario() {
-        this.uuid = UUID.randomUUID();
+        this.uuid = UUID.randomUUID().toString();
     }
 
-    public BeanUsuario(String nombre, String email) {
-        this.nombre = nombre;
-        this.email = email;
-        this.uuid = UUID.randomUUID();
+    public BeanUsuario(String razonSocial, String rfc, String telefono, String contacto, String correo) {
+        this.razonSocial = razonSocial;
+        this.rfc = rfc;
+        this.telefono = telefono;
+        this.contacto = contacto;
+        this.correo = correo;
+        this.uuid = UUID.randomUUID().toString();
     }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public UUID getUuid() { return uuid; }
-    public void setUuid(UUID uuid) { this.uuid = uuid; }
+    public String getUuid() { return uuid; }
+    public void setUuid(String uuid) { this.uuid = uuid; }
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public String getRazonSocial() { return razonSocial; }
+    public void setRazonSocial(String razonSocial) { this.razonSocial = razonSocial; }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getRfc() { return rfc; }
+    public void setRfc(String rfc) { this.rfc = rfc; }
+
+    public String getTelefono() { return telefono; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
+
+    public String getContacto() { return contacto; }
+    public void setContacto(String contacto) { this.contacto = contacto; }
+
+    public String getCorreo() { return correo; }
+    public void setCorreo(String correo) { this.correo = correo; }
 }
