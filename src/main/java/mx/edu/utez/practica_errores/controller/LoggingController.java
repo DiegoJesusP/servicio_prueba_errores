@@ -1,7 +1,5 @@
 package mx.edu.utez.practica_errores.controller;
 
-
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.apache.logging.log4j.LogManager;
@@ -14,9 +12,9 @@ public class LoggingController {
 
     @GetMapping("/log")
     public String logExample() {
-        logger.info("Log nivel Informacion ejemplo");
-        logger.debug("Log nivel Debug ejemplo");
-        logger.error("Error Log ejempo", new Exception("Example exception"));
-        return "Logging ha sido demostrado. Revisa la consola y el archivo de logs!";
+        logger.info(" ♦ Esto es un log INFO");
+        logger.debug(" ♦ Esto es un log DEBUG");
+        logger.error(" ♦ Esto es un log ERROR", new Exception("Error de prueba"));
+        return "Prueba de logging completada. Ya debe de aparecer en consola y el archivo de logs";
     }
 }
